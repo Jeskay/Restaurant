@@ -4,7 +4,8 @@
     @submit="sendForm"
     :image="image" 
     :name="name" 
-    :description="description" 
+    :description="description"
+    :portions="portions" 
     :category="categoryName">
   </EditForm>
 </template>
@@ -20,6 +21,7 @@ export default {
     image: String,
     description: String,
     categoryName: String,
+    portions: String,
   },
   components: {
     EditForm

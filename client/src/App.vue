@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar nvabar-expand-md navbar-light ">
-    <a class="navbar-brand" href="/">У Дяди Вани</a>
-    <div class="navbar-nav">
+    <a class="navbar-brand h2 ms-3" href="/"> Ресторан Шалом</a>
+    <div class="navbar-nav me-3">
       <router-link class="nav-link" to="/">Меню</router-link>
       <router-link class="nav-link" to="/create">Добавить блюдо</router-link>
     </div>

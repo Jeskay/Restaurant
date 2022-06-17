@@ -1,9 +1,9 @@
 <template>
     <div class="container bg-light p-3">
-      <div v-if="loading" class="spinner-grow" role="status">
-        <span class="sr-only">Loading...</span>
+      <div v-if="loading" class="d-flex justify-content-center">
+        <div class="spinner-grow" role="status"></div>
       </div>
-      <form v-else @submit.prevent="submitForm">
+      <form v-else  @submit.prevent="submitForm">
         <label class="mr-2" for="category">Категория меню</label>
         <div class="d-flex flex-row mb-3">
           <select id="category" name="category" style="width:fit-content" class="form-select">
@@ -51,7 +51,7 @@ export default {
     data() {
         return {
             categories: [],
-            formPortions: [{ id: 1, amount: 100, cost: 100, measure: "г." }],
+            formPortions: [],
             url: null,
             loading: false,
             noMutation: false,
@@ -65,12 +65,14 @@ export default {
         name: String,
         category: String,
         description: String,
-        portions: Object
+        portions: String
     },
     created() {
         this.fetchCategories();
-        if (this.name)
-            this.noMutation = true;
+        if (this.name) {
+          this.noMutation = true;
+          this.formPortions = JSON.parse(this.portions);
+        }
         this.formName = this.name ?? "";
         this.formDescription = this.description ?? "";
     },
@@ -93,10 +95,12 @@ export default {
         submitForm(submitEvent) {
             this.loading = true;
             const formData = new FormData(submitEvent.target);
-            this.sendPortions().then((res) => {
-              console.log(res);
-              this.$emit("submit", formData);
-            });
+            if(this.noMutation)
+              this.sendPortions().then((res) => {
+                console.log(res);
+                this.$emit("submit", formData);
+              });
+            else this.$emit("submit", formData);
             
         },
         loadPreview(event) {

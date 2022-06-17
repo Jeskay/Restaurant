@@ -24,9 +24,13 @@ router.post('/portions/:name', express.json() , async (req, res) => {
         where: {
             dishName: req.params.name
         }
+    }).catch(err => {
+        return res.status(400).send(err);
     });
     const result = await db.portion.createMany({
         data: portions
+    }).catch(err => {
+        return res.status(400).send(err);
     });
     res.status(200).json(result);
 });

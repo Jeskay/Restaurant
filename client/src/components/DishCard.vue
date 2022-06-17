@@ -51,6 +51,7 @@ export default {
             image: this.dish.image,
             description: this.dish.description,
             categoryName: this.dish.categoryName,
+            portions: JSON.stringify(this.dish.portions)
           }
        })
     },

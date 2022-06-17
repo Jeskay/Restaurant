@@ -23,7 +23,7 @@ model Dish {
   description  String?
   image        String?
   name         String    @id
-  category     Category  @relation(fields: [categoryName], references: [name])
+  category     Category  @relation(fields: [categoryName], references: [name], onDelete: Cascade)
   portions     Portion[]
 }
 
@@ -33,5 +33,5 @@ model Portion {
   amount   Int
   dishName String
   measure  String @default("грамм")
-  dish     Dish   @relation(fields: [dishName], references: [name])
+  dish     Dish   @relation(fields: [dishName], references: [name], onDelete: Cascade)
 }

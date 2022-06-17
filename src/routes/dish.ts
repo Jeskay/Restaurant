@@ -32,7 +32,7 @@ router.post('/dishes', async (req, res) => {
             }
         }
     }).catch(e => {
-        res.status(400).json(e);
+        return res.status(400).json(e);
     });
     res.status(200).json(result);
 });
