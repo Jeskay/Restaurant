@@ -8,7 +8,8 @@ router.get('/dishes/:category', async (req, res) => {
     const dishes = await db.dish.findMany({
         where: {
             categoryName: req.params.category
-        }
+        },
+        include: {portions: true},
     });
     res.status(200).json(dishes);
 });
@@ -67,11 +68,12 @@ router.delete('/dishes/:name', async (req, res) => {
     res.status(200).json(result);
 });
 
-router.get('/dishes/:name', async (req, res) => {
+router.get('/dish/:name', async (req, res) => {
     const dish = await db.dish.findFirst({
         where: {
             name: req.params.name
-        }
+        },
+        include: {portions: true}
     });
     res.json(dish);
 });

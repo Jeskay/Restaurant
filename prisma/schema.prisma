@@ -22,6 +22,16 @@ model Dish {
   categoryName String
   description  String?
   image        String?
-  name         String   @id
-  category     Category @relation(fields: [categoryName], references: [name])
+  name         String    @id
+  category     Category  @relation(fields: [categoryName], references: [name])
+  portions     Portion[]
+}
+
+model Portion {
+  id       Int    @id @default(autoincrement())
+  cost     Int
+  amount   Int
+  dishName String
+  measure  String @default("грамм")
+  dish     Dish   @relation(fields: [dishName], references: [name])
 }
