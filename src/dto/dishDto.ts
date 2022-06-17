@@ -1,3 +1,5 @@
+import { portionDto } from "./portionDto";
+
 export interface DishDto {
     name: string;
     description?: string;
@@ -5,7 +7,9 @@ export interface DishDto {
     category: string;
 }
 export interface DishUpdateDto {
+    name: string;
     description: string | undefined;
-    image: string | undefined;
     category: string | undefined;
+    image: string | undefined;
+    portions: portionDto[];
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div style="border-bottom: 2px solid black; padding: 2rem;">
+    <div class="text-center" style="border-bottom: 2px solid black; padding: 2rem;">
       <h3> Выберите категорию меню </h3>
       <select class="custom-select" @change="selectCategory">
         <option v-for="category in categories" :key="category.name" :value="category.name" >

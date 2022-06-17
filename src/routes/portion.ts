@@ -1,5 +1,6 @@
 import express from "express";
 import {db} from "../database";
+import { portionDto } from "../dto/portionDto";
 const router = express.Router();
 
 router.get('/portions', async (req, res) => {
@@ -7,24 +8,26 @@ router.get('/portions', async (req, res) => {
     res.json(portions);
 });
 
-router.post('/portions', express.json() , async (req, res) => {
-    const {dishName, cost, amount, measure} = req.body;
-    const dish = await db.dish.findFirst({
-        where: {name: dishName},
-        include: {portions: true}
+router.get('/portions/:dish', async (req, res) =>{
+    const portions = await db.portion.findMany({
+        where:{dishName: req.params.dish}
     });
-    if(!dish) 
-        return res.status(404).send('Dish not found');
-    else if(dish.portions.find(portion => portion.cost == cost && portion.amount == amount))
-        return res.status(400).send('Portion already exists');
-    const result = await db.portion.create({
-        data: {
-            dishName: dishName,
-            cost: cost,
-            amount: amount,
-            measure: measure,
-        }}
-    ).catch(err => res.status(400).json(err));
+    res.json(portions);
+})
+
+router.post('/portions/:name', express.json() , async (req, res) => {
+    const portions: portionDto[] = (req.body as portionDto[]).map(p => {
+        p.dishName = req.params.name;
+        return p;
+    });
+    await db.portion.deleteMany({
+        where: {
+            dishName: req.params.name
+        }
+    });
+    const result = await db.portion.createMany({
+        data: portions
+    });
     res.status(200).json(result);
 });
 
